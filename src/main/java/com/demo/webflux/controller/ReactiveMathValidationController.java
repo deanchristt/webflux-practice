@@ -40,7 +40,7 @@ public class ReactiveMathValidationController {
                 .flatMap(reactiveMathService::findSquare); //i -> reactiveMathService.findSquare(i)
     }
 
-    @GetMapping("/square/{input}/assigenment")
+    @GetMapping("/square/{input}/assignment")
     public Mono<ResponseEntity<Response>> findSquareAssignment(@PathVariable int input) {
         return Mono.just(input)
                 .filter(i -> i >= 10 && i <= 20)
