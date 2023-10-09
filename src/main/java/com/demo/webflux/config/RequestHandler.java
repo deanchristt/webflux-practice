@@ -1,7 +1,9 @@
 package com.demo.webflux.config;
 
+import com.demo.webflux.dto.InputFailedValidation;
 import com.demo.webflux.dto.MultiplyRequest;
 import com.demo.webflux.dto.Response;
+import com.demo.webflux.exception.InputValidationException;
 import com.demo.webflux.service.ReactiveMathService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -42,5 +44,17 @@ public class RequestHandler {
         Mono<Response> responseMono = reactiveMathService.multiply(multiplyRequestMono);
         return ServerResponse.ok()
                 .body(responseMono, Response.class);
+    }
+
+    public Mono<ServerResponse> squareHandlerWithValidation(ServerRequest serverRequest){
+        int input = Integer.valueOf(serverRequest.pathVariable("input"));
+
+        //Validation
+        if ((input <= 10 || input >= 20)){
+            return Mono.error(new InputValidationException(input));
+        }
+
+        Mono<Response> responseMono = reactiveMathService.findSquare(input);
+        return ServerResponse.ok().body(responseMono, Response.class); // For Publisher Type
     }
 }
