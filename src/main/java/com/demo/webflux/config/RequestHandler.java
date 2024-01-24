@@ -47,7 +47,7 @@ public class RequestHandler {
     }
 
     public Mono<ServerResponse> squareHandlerWithValidation(ServerRequest serverRequest){
-        int input = Integer.valueOf(serverRequest.pathVariable("input"));
+        int input = Integer.parseInt(serverRequest.pathVariable("input"));
 
         //Validation
         if ((input <= 10 || input >= 20)){
