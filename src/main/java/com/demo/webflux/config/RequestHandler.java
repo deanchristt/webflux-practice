@@ -20,19 +20,19 @@ public class RequestHandler {
     private final ReactiveMathService reactiveMathService;
 
     public Mono<ServerResponse> squareHandler(ServerRequest serverRequest){
-        int input = Integer.valueOf(serverRequest.pathVariable("input"));
+        int input = Integer.parseInt(serverRequest.pathVariable("input"));
         Mono<Response> responseMono = reactiveMathService.findSquare(input);
         return ServerResponse.ok().body(responseMono, Response.class); // For Publisher Type
     }
 
     public Mono<ServerResponse> tableHandler(ServerRequest serverRequest){
-        int input = Integer.valueOf(serverRequest.pathVariable("input"));
+        int input = Integer.parseInt(serverRequest.pathVariable("input"));
         Flux<Response> responseFlux = reactiveMathService.multiplicationTable(input);
         return ServerResponse.ok().body(responseFlux, Response.class); // For Publisher Type
     }
 
     public Mono<ServerResponse> tableStreamHandler(ServerRequest serverRequest){
-        int input = Integer.valueOf(serverRequest.pathVariable("input"));
+        int input = Integer.parseInt(serverRequest.pathVariable("input"));
         Flux<Response> responseFlux = reactiveMathService.multiplicationTable(input);
         return ServerResponse.ok()
                 .contentType(MediaType.TEXT_EVENT_STREAM)
